@@ -124,6 +124,22 @@ class BGGCommon(object):
         # add the rate limiting adapter
         self.requests_session.mount(api_endpoint, RateLimitingAdapter(rpm=requests_per_minute))
 
+    def __repr__(self):
+        """Returns representation of the object"""
+        return "{}: _search_api_url: {} _thing_api_url: {} _guild_api_url: {} _user_api_url: {} _plays_api_url: {} _hot_api_url: {} _collection_api_url: {} _timeout: {} _retries: {} _retry_delay: {}".format(
+            self.__class__.__name__,
+            self._search_api_url,
+            self._thing_api_url,
+            self._guild_api_url,
+            self._user_api_url,
+            self._plays_api_url,
+            self._hot_api_url,
+            self._collection_api_url,
+            self._timeout,
+            self._retries,
+            self._retry_delay,
+        )
+
     def _get_game_id(self, name, game_type, choose):
         """
         Returns the BGG ID of a game, searching by name
@@ -732,6 +748,9 @@ class BGGClient(BGGCommon):
                                         retries=retries,
                                         retry_delay=retry_delay,
                                         requests_per_minute=requests_per_minute)
+
+    def __repr__(self):
+        return super().__repr__()
 
     def get_game_id(self, name, choose=BGGChoose.FIRST):
         """
